@@ -1,17 +1,17 @@
 $(document).ready(() => {
+    // It will be used in the movie information page, it will request the movie information from the database when the page load
+    showInformation();
     // Add functionality to search form, calling the function "searchAnswer" . It will also prevent the page to reload(the default action of a form)
     $('#searchForm').on('submit', (e) => {
         let searchQuery  = $('#searchQuery').val();
         searchAnswer(searchQuery);
+        searchGenres();
         e.preventDefault();
-    })
+    });
     // Add functionality to popular button on the navbar. It will call the function popular_movies
     $("#popular").on("click", (e) =>{
     popular_movies();
-    e.preventDefault();
-    })
-     // It will be used in the movie information page, it will request the movie information from the database
-    showInformation();
+    });
 });
 //Shows the results requests from the search in the page.
 function outputResults(results){
@@ -53,7 +53,6 @@ function searchAnswer(searchQuery){
 // Request acess to popular movies
 function popular_movies(){
     $.ajax(`https://api.themoviedb.org/3/movie/popular?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US&page=1`).then((response) => {
-    console.log(response);
     results = response.results
     outputResults(results)
 }).catch((err) =>{
@@ -70,18 +69,10 @@ function movieInformation(id){
 }
 
 // Request access  to a single movie information using API. This Function will be called everytime the movie information page is access ed. 
-function getGenres(genres){
-    genresNames = []
-    for (let i = genres.length; i == 0; i--)
-    {
-        genresNames.push(genres[i].name)
-    }
-}
 function showInformation(){
     let movieId = sessionStorage.getItem('movieId')
     //Makes two requests.The first one for movie information and other for the people(actores, writings and directors) from the movie. 
     $.when($.ajax(`https://api.themoviedb.org/3/movie/${movieId}?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US`),$.ajax(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US`)).done((response1, response2) => {
-        console.log(response2)
         let movie = response1[0];
         let crew = response2[0].crew;
         // Get the genres from the movie information response
@@ -103,12 +94,12 @@ function showInformation(){
         
         // Output will later contain an html format using information from the database answer
         let output = `
-        <div class="row border border-dark m-1">
-            <h1 class="text-center">${movie.title}</h1>
-            <div class="col-sm">
+        <div class="row border border-dark m-1 right">
+            <h1 class="text-center text-uppercase">${movie.title}</h1>
+            <div class="col-sm img-container">
                     <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="Movie Poster">
             </div>
-            <div  class="col-sm left ">
+            <div  class="col-sm col-6 left ">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Genres: ${genres}.</li>
                     <li class="list-group-item"> Directors: ${directors}.</li>
