@@ -9,13 +9,23 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="navbar  bg-dark">
+    <nav class="navbar navbar-expand-md bg-dark">
         <div class="container">
-            <div class="navbar-brand">
-                <a href="index.html" class="navbar-brand">Your Movie</a>
-            </div>
-            <div class="navbar-text">
-                <a href="about.html" class="navbar-brand">About</a>
+            <a href="index.html" class="navbar-brand">Your Movie</a> 
+            <button class="navbar-toggler btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#2aa198" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" stroke-width="30" />
+                  </svg>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav  mb-2 mb-lg-0">
+                    <li class="nav-item ">
+                        <a class="nav-link active" id="popular" aria-current="page" href="./index.html">Popular Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="about.html">About</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
