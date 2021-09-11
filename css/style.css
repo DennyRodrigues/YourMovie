@@ -3,6 +3,13 @@ body{
     padding:0;
     margin:auto;
 }
+#navbarCollapse ul{
+    position: absolute;
+    right:5%;
+}
+.navbar-toggler{
+   padding: 2px;;
+}
 
 #movies img, #movies img{
     width:100%;
@@ -32,12 +39,9 @@ body{
     position: relative;
     top:100px;
 }
-#navbarCollapse ul{
-    position: absolute;
-    right:5%;
-}
-.navbar-toggler{
-   padding: 2px;;
+
+#information #plot-summary p{
+    text-align: center;
 }
 
 @media (max-width:768px){
