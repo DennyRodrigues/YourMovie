@@ -10,7 +10,10 @@ body{
 .navbar-toggler{
    padding: 2px;;
 }
-
+#movies{
+    min-height: 70vh;
+    margin-bottom: 12px;
+}
 #movies img, #movies img{
     width:100%;
     height:250px;
@@ -49,7 +52,19 @@ body{
 #information #plot-summary p{
     text-align: center;
 }
-
+.page_count{
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom:24px;
+}
+.page_buttons{
+    outline: none;
+    border:none;
+    border-bottom: 1px solid white;
+    color:white;
+    background: none;
+    text-transform: capitalize;
+}
 @media (max-width:768px){
     #information{
         width:100%;

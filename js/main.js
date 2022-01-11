@@ -3,27 +3,37 @@ $(document).ready(() => {
     showInformation();
     // Add functionality to search form, calling the function "searchAnswer" . It will also prevent the page to reload(the default action of a form)
     $('#searchForm').on('submit', (e) => {
-        let searchQuery  = $('#searchQuery').val();
-        searchAnswer(searchQuery);
-        searchGenres();
         e.preventDefault();
+        page = 1;
+        searchQuery  = $('#searchQuery').val();
+        searchAnswer(searchQuery);
     });
     // Add functionality to popular button on the navbar. It will call the function popular_movies
     $("#popular").on("click", (e) =>{
+    page = 1;
     popular_movies();
     });
 });
-//Shows the results requests from the search in the page.
+let searchQuery;
+let page = 1;
+let output;
+let total_pages;
+let isSearching;
+// Buttons in the next page 
+
+//Shows the results in the site.
 function outputResults(results){
     let movies = results;
         // Output will later contain an html format using information from the database answer
-        let output = '';
+        output = '';
         // In case the database doesn't find any match
-        if (!movies){
+        if (movies.length === 0){
             output = `<div> <h1 class="text-center">Movies Title Not Found</h1></div>`
+            console.log('not found')
         }
         // In case the database find any match
         else{
+            $('#current').html(page);
             $.each(movies, (index, movie) =>{
                 output += `
                 <div class="col-sm">
@@ -42,22 +52,25 @@ function outputResults(results){
 }
 // It will use API to get access  to the movies database and get the ones that match the search
 function searchAnswer(searchQuery){
-    $.ajax(`https://api.themoviedb.org/3/search/movie?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US&query=${searchQuery}&page=1&include_adult=false`).then((response) => {
+    $.ajax(`https://api.themoviedb.org/3/search/movie?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US&query=${searchQuery}&page=${page}&include_adult=false`).then((response) => {
         console.log(response);
-        results = response.results
+        totalPages = response.total_pages;
+        results = response.results;
         outputResults(results)
     }).catch((err) =>{
         console.log(err);
     });
+    isSearching = true;
 }
 // Request acess to popular movies
 function popular_movies(){
-    $.ajax(`https://api.themoviedb.org/3/movie/popular?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US&page=1`).then((response) => {
-    results = response.results
-    outputResults(results)
+    $.ajax(`https://api.themoviedb.org/3/movie/popular?api_key=2c7a7142763b8809159d99fdf307fbb8&language=en-US&page=${page}`).then((response) => {
+        totalPages = response.total_pages;
+    outputResults(response.results)
 }).catch((err) =>{
     console.log(err);
 });
+    isSearching = false;    
 
 }
 
@@ -118,4 +131,32 @@ function showInformation(){
     }).catch((err) =>{
         console.log(err);
     });
+}
+// Add prev page function
+$('#prev').on('click', (e) => {
+    e.preventDefault()
+    if(output  && page > 1){
+        page -= 1;
+        pageUpdate()
+        
+    }
+})
+// Add next page function
+$('#next').on('click', (e) => {
+    e.preventDefault()
+    if(output && page < totalPages){
+        page += 1;
+        pageUpdate()
+    }
+})
+// It will call the search function again, and update the current page number. And also it will look if the user is looking in some query that was searched or is looking in popular movies
+function pageUpdate(){
+    if (isSearching){
+        searchAnswer(searchQuery);
+    }
+    else{
+        popular_movies()
+    }
+     // update current number page
+    $('#current').html(page);
 }
