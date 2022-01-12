@@ -3,6 +3,9 @@ body{
     padding:0;
     margin:auto;
 }
+.navbar, .navbar-brand{
+    font-size: 24px;
+}
 #navbarCollapse ul{
     position: absolute;
     right:5%;
@@ -63,9 +66,11 @@ body{
     border-bottom: 1px solid white;
     color:white;
     background: none;
+    font-size: 20px;
     text-transform: capitalize;
+    margin-left: 24px;
 }
-@media (max-width:768px){
+@media (max-width:960px){
     #information{
         width:100%;
         margin:auto;
@@ -79,7 +84,16 @@ body{
         top:0;
         flex-basis:100%
     }
+    #navbarCollapse li, .navbar-brand{
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
     #navbarCollapse ul{
         position: static;
+  
+    }
+    .page_buttons{
+        font-size: 36px;
+        margin-left: 36px;
     }
 }
